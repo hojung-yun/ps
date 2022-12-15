@@ -1,20 +1,11 @@
+# 동적계획법
 def solution(board):
     r, c = len(board), len(board[0])
-    answer = min(r, c) # 표에서 1로 이루어진 가장 큰 정사각형의 한 변의 길이
+    answer = 0 # 표에서 1로 이루어진 가장 큰 정사각형의 한 변의 길이
+    for y in range(r):
+        for x in range(c):
+            if y >= 1 and x >= 1 and board[y][x]:
+                board[y][x] = min(min(board[y-1][x-1], board[y-1][x]), board[y][x-1]) + 1 # y행 x열에 위치한 칸을 오른쪽 하단 모서리로 갖는 정사각형의 최대 길이
+            answer = max(answer, board[y][x])
     
-    def is_square(y, x, l, board): # 좌측 상단 꼭지점이 y행 x열이고 길이가 l인 정사각형이 board에서 모두 1로 이루어져있는지 여부를 반환하는 함수
-        for i in range(l):
-            for j in range(l):
-                if board[y + i][x + j] != 1:
-                    return False
-        return True
-        
-    while answer:
-        for y in range(r - answer + 1):
-            for x in range(c - answer + 1):
-                if is_square(y, x, answer, board):
-                    return answer ** 2
-        answer -= 1
-
-    return 0
-
+    return answer ** 2
