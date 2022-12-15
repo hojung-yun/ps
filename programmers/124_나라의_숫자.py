@@ -1,3 +1,4 @@
+# 동적계획법
 def solution(n):
     table = ['1', '2', '4']
     answer = ''
